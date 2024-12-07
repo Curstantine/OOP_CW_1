@@ -1,8 +1,10 @@
 plugins {
-    id("java-conventions")
+	id("java-conventions")
 }
 
 group = "moe.curstantine"
 version = "0.0.1-SNAPSHOT"
 
-dependencies {}
+dependencies {
+	implementation("com.google.code.gson:gson:2.11.0")
+}
