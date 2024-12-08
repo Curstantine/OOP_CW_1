@@ -12,6 +12,18 @@ public class Cli {
 	public static void main(String[] args) {
 		Configuration config;
 
+		System.out.println(
+				"""
+						******************** Welcome to the configurator! ********************
+						This application will ask you a few questions and write a config.json
+						file to the current working directory, which will later be used by other
+						services.
+						
+						Make sure the config.json file exists before starting the backend and
+						web applications.
+						"""
+		);
+
 		try {
 			config = Configuration.load();
 		} catch (Exception e) {
