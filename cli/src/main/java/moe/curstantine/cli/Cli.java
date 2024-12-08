@@ -12,18 +12,6 @@ public class Cli {
 	public static void main(String[] args) {
 		Configuration config;
 
-		System.out.println(
-				"""
-						******************** Welcome to the configurator! ********************
-						This application will ask you a few questions and write a config.json
-						file to the current working directory, which will later be used by other
-						services.
-						
-						Make sure the config.json file exists before starting the backend and
-						web applications.
-						"""
-		);
-
 		try {
 			config = Configuration.load();
 		} catch (Exception e) {
@@ -32,6 +20,41 @@ public class Cli {
 			return;
 		}
 
+		if (args.length == 0) {
+			System.out.println(Constants.WELCOME_MESSAGE);
+			return;
+		}
+
+		switch (args[0]) {
+			case "configure":
+				configure(config);
+				break;
+			case "start":
+				start(config);
+				break;
+			case "stop":
+				stop(config);
+				break;
+			default:
+				help(args[2]);
+				break;
+		}
+	}
+
+	public static void help(String subCommand) {
+		switch (subCommand) {
+			case "configure":
+				System.out.println(Constants.CONFIGURE_HELP);
+			case "start":
+				System.out.println(Constants.START_HELP);
+			case "stop":
+				System.out.println(Constants.STOP_HELP);
+			default:
+				System.out.println(Constants.BASE_HELP);
+		}
+	}
+
+	public static void configure(Configuration config) {
 		final int totalTickets = Prompter.promptRangeInteger(
 				0, Configuration.MAX_TOTAL_TICKETS,
 				String.format("Total number of tickets (min: 0, max: %s) [current: %s]: ",
@@ -86,5 +109,11 @@ public class Cli {
 			System.err.println("Failed to update configuration: " + e.getLocalizedMessage());
 			LOGGER.log(Level.SEVERE, "Failed to update configuration: " + e.getLocalizedMessage(), e);
 		}
+	}
+
+	public static void start(Configuration config) {
+	}
+
+	public static void stop(Configuration config) {
 	}
 }

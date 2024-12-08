@@ -53,7 +53,7 @@ class PrompterTest {
 			"1, 5, 6, 'Above upper bound'"
 	})
 	void testInvalidRangeInputsWithRetry(int start, int end, int invalidInput, String scenario) {
-		provideInput(String.valueOf(invalidInput), "3");
+		provideInput(String.valueOf(invalidInput));
 		final int result = Prompter.promptRangeInteger(start, end, "Test prompt: ", "Invalid input");
 		assertEquals(3, result, scenario);
 		assertTrue(outContent.toString().contains("Invalid input"), "Should print invalid input message");
@@ -81,7 +81,7 @@ class PrompterTest {
 		final boolean result = Prompter.promptConditional("Confirm?");
 		assertFalse(result, "Should return false for " + input);
 	}
-	
+
 	// Helper method to simulate System.in input
 	private void provideInput(String... inputs) {
 		final String source = String.join(System.lineSeparator(), inputs);
