@@ -47,7 +47,10 @@ public class Configuration {
 	}
 
 	public void setTotalTickets(int totalTickets) throws IllegalArgumentException {
-		if (totalTickets < 0) throw new IllegalArgumentException();
+		if (totalTickets < 0 || totalTickets > MAX_TOTAL_TICKETS || totalTickets > maxTicketCapacity) {
+			throw new IllegalArgumentException();
+		}
+
 		this.totalTickets = totalTickets;
 	}
 
@@ -56,7 +59,10 @@ public class Configuration {
 	}
 
 	public void setTicketReleaseRate(int ticketReleaseRate) {
-		if (ticketReleaseRate < 0) throw new IllegalArgumentException();
+		if (ticketReleaseRate < 0 || ticketReleaseRate > MAX_TICKET_RELEASE_RATE) {
+			throw new IllegalArgumentException();
+		}
+
 		this.ticketReleaseRate = ticketReleaseRate;
 	}
 
@@ -65,7 +71,10 @@ public class Configuration {
 	}
 
 	public void setCustomerRetrievalRate(int customerRetrievalRate) {
-		if (customerRetrievalRate < 0) throw new IllegalArgumentException();
+		if (customerRetrievalRate < 0 || customerRetrievalRate > MAX_CUSTOMER_RETRIEVAL_RATE) {
+			throw new IllegalArgumentException();
+		}
+
 		this.customerRetrievalRate = customerRetrievalRate;
 	}
 
@@ -74,7 +83,10 @@ public class Configuration {
 	}
 
 	public void setMaxTicketCapacity(int maxTicketCapacity) {
-		if (maxTicketCapacity < 0) throw new IllegalArgumentException();
+		if (maxTicketCapacity < 0 || maxTicketCapacity > MAX_MAX_TICKET_CAPACITY) {
+			throw new IllegalArgumentException();
+		}
+
 		this.maxTicketCapacity = maxTicketCapacity;
 	}
 
