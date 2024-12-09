@@ -1,5 +1,6 @@
 package moe.curstantine.backend.service;
 
+import com.google.gson.JsonSyntaxException;
 import moe.curstantine.shared.Configuration;
 import moe.curstantine.shared.ReferenceConfiguration;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ public class ConfigurationService {
 	public ReferenceConfiguration getRef() {
 		return new ReferenceConfiguration(config);
 	}
-
+	
 	public int getTotalTickets() {
 		return config.getTotalTickets();
 	}
@@ -53,6 +54,25 @@ public class ConfigurationService {
 		config.setMaxTicketCapacity(maxTicketCapacity);
 	}
 
+	/**
+	 * Either deserialize or write a default {@link Configuration} to <code>{cwd}/config.json</code>
+	 * <p>
+	 * This method is NOT thread-safe. Consult the information available in the {@link Configuration} javadoc.
+	 *
+	 * @throws IOException         thrown when the system fails to either write or read to config.json
+	 * @throws JsonSyntaxException thrown when the JSON is malformed
+	 */
+	public static Configuration load() throws IOException, JsonSyntaxException {
+		return Configuration.load();
+	}
+
+	/**
+	 * Saves a configuration file to `{cwd}/config.json`.
+	 * <p>
+	 * This method is NOT thread-safe. Consult the information available in the {@link Configuration} javadoc.
+	 *
+	 * @throws IOException When the system fails to read the config.json file
+	 */
 	public void save() throws IOException {
 		config.save();
 	}
