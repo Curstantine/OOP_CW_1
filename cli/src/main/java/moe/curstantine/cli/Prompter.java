@@ -6,13 +6,14 @@ import java.util.Scanner;
 public class Prompter {
 	public static int promptRangeInteger(int start, int end, String message, String invalidMessage) {
 		int value;
+		final Scanner input = new Scanner(System.in);
 
 		while (true) {
 			System.out.print(message);
 
 			try {
-				final Scanner input = new Scanner(System.in);
 				final String optString = input.nextLine();
+
 				if (optString.isBlank()) {
 					value = -1;
 					break;
@@ -36,12 +37,12 @@ public class Prompter {
 	 */
 	public static boolean promptConditional(String message) {
 		boolean value;
+		final Scanner input = new Scanner(System.in);
 
 		while (true) {
 			System.out.print(message + " (Y/N): ");
 
 			try {
-				final Scanner input = new Scanner(System.in);
 				final String stringVal = input.next().toLowerCase();
 
 				value = switch (stringVal) {
