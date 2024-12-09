@@ -58,7 +58,7 @@ public class Configuration {
 		return ticketReleaseRate;
 	}
 
-	public void setTicketReleaseRate(int ticketReleaseRate) {
+	public void setTicketReleaseRate(int ticketReleaseRate) throws IllegalArgumentException {
 		if (ticketReleaseRate < 0 || ticketReleaseRate > MAX_TICKET_RELEASE_RATE) {
 			throw new IllegalArgumentException();
 		}
@@ -70,7 +70,7 @@ public class Configuration {
 		return customerRetrievalRate;
 	}
 
-	public void setCustomerRetrievalRate(int customerRetrievalRate) {
+	public void setCustomerRetrievalRate(int customerRetrievalRate) throws IllegalArgumentException {
 		if (customerRetrievalRate < 0 || customerRetrievalRate > MAX_CUSTOMER_RETRIEVAL_RATE) {
 			throw new IllegalArgumentException();
 		}
@@ -82,7 +82,7 @@ public class Configuration {
 		return maxTicketCapacity;
 	}
 
-	public void setMaxTicketCapacity(int maxTicketCapacity) {
+	public void setMaxTicketCapacity(int maxTicketCapacity) throws IllegalArgumentException {
 		if (maxTicketCapacity < 0 || maxTicketCapacity > MAX_MAX_TICKET_CAPACITY) {
 			throw new IllegalArgumentException();
 		}
