@@ -8,13 +8,36 @@ import java.util.logging.Logger;
 
 public class Cli {
 	private static final Logger LOGGER = Logger.getLogger(Cli.class.getName());
-	
+
 	private static final String WELCOME_MESSAGE = """
 			************************* Welcome to the CLI! **************************
-			This application overall configures the vendor system and its settings.
+			This application configures the vendor system and its settings.
 			To start the configuration process, use the configure subcommand. For more
 			information, consult the help messages by running: cli help configure.
 			************************************************************************""";
+
+	private static final String HELP_BASE = """
+			Usage: cli <COMMAND>
+			
+			Available commands:
+			help 		Displays this help message. For further explanations, use cli help <COMMAND>
+			configure	Prompts to change the service configuration
+			attach		Displays the real-time events executing inside the backend application""";
+
+	private static final String HELP_CONFIGURE = """
+			Usage: cli configure
+			
+			Prompts the user to change the service-specific configurations like:
+			- Total tickets
+			- Ticket release rate
+			- Customer retrieval rate
+			- Max ticket capacity""";
+
+	private static final String HELP_ATTACH = """
+			Usage: cli attach
+			
+			Attaches this CLI into the backend application, displaying all events being executed by the process.""";
+
 
 	public static void main(String[] args) {
 		Configuration config;
@@ -27,11 +50,59 @@ public class Cli {
 			return;
 		}
 
-		System.out.println(WELCOME_MESSAGE);
-		configure(config);
+		if (args == null || args.length == 0) {
+			System.out.println(WELCOME_MESSAGE);
+			return;
+		}
+
+		switch (args[0]) {
+			case "attach":
+				attach();
+				break;
+			case "configure":
+				configure(config);
+				break;
+			case "help":
+				if (args.length > 1) help(args[1]);
+				else help(null);
+				break;
+		}
+	}
+
+	public static void attach() {
+
+	}
+
+	public static void help(String subCommand) {
+		if (subCommand == null || subCommand.isEmpty()) {
+			System.out.println(HELP_BASE);
+			return;
+		}
+
+		switch (subCommand) {
+			case "configure":
+				System.out.println(HELP_CONFIGURE);
+				break;
+			case "attach":
+				System.out.println(HELP_ATTACH);
+				break;
+			default:
+				System.out.println(HELP_BASE);
+				break;
+		}
 	}
 
 	public static void configure(Configuration config) {
+		final int maxTicketCapacity = Prompter.promptRangeInteger(
+				0, Configuration.MAX_MAX_TICKET_CAPACITY,
+				String.format("Max ticket capacity (min: 0, max: %s) [current: %s]: ",
+						Configuration.MAX_MAX_TICKET_CAPACITY,
+						config.getMaxTicketCapacity()
+				),
+				"You need to enter a valid number!"
+		);
+		if (maxTicketCapacity != -1) config.setMaxTicketCapacity(maxTicketCapacity);
+		
 		final int totalTickets = Prompter.promptRangeInteger(
 				0, Configuration.MAX_TOTAL_TICKETS,
 				String.format("Total number of tickets (min: 0, max: %s) [current: %s]: ",
@@ -62,15 +133,6 @@ public class Cli {
 		);
 		if (customerRetrievalRate != -1) config.setCustomerRetrievalRate(customerRetrievalRate);
 
-		final int maxTicketCapacity = Prompter.promptRangeInteger(
-				0, Configuration.MAX_MAX_TICKET_CAPACITY,
-				String.format("Max ticket capacity (min: 0, max: %s) [current: %s]: ",
-						Configuration.MAX_MAX_TICKET_CAPACITY,
-						config.getMaxTicketCapacity()
-				),
-				"You need to enter a valid number!"
-		);
-		if (maxTicketCapacity != -1) config.setMaxTicketCapacity(maxTicketCapacity);
 
 		try {
 			System.out.println("\n" + config.toFormattedString());

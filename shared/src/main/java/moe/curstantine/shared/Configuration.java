@@ -20,26 +20,38 @@ import java.util.logging.Logger;
 public class Configuration {
 	private static final Logger LOGGER = Logger.getLogger(Configuration.class.getName());
 
+	public static int DEFAULT_MAX_TICKET_CAPACITY = 1000;
 	public static int DEFAULT_TOTAL_TICKETS = 1000;
 	public static int DEFAULT_TICKET_RELEASE_RATE = 20;
 	public static int DEFAULT_CUSTOMER_RETRIEVAL_RATE = 19;
-	public static int DEFAULT_MAX_TICKET_CAPACITY = 1000;
 
+	public static int MAX_MAX_TICKET_CAPACITY = 1000;
 	public static int MAX_TOTAL_TICKETS = 1000;
 	public static int MAX_TICKET_RELEASE_RATE = 1000;
 	public static int MAX_CUSTOMER_RETRIEVAL_RATE = 1000;
-	public static int MAX_MAX_TICKET_CAPACITY = 1000;
 
+	private int maxTicketCapacity;
 	private int totalTickets;
 	private int ticketReleaseRate;
 	private int customerRetrievalRate;
-	private int maxTicketCapacity;
 
 	private Configuration() {
+		this.maxTicketCapacity = DEFAULT_MAX_TICKET_CAPACITY;
 		this.totalTickets = DEFAULT_TOTAL_TICKETS;
 		this.ticketReleaseRate = DEFAULT_TICKET_RELEASE_RATE;
 		this.customerRetrievalRate = DEFAULT_CUSTOMER_RETRIEVAL_RATE;
-		this.maxTicketCapacity = DEFAULT_MAX_TICKET_CAPACITY;
+	}
+
+	public int getMaxTicketCapacity() {
+		return maxTicketCapacity;
+	}
+
+	public void setMaxTicketCapacity(int maxTicketCapacity) throws IllegalArgumentException {
+		if (maxTicketCapacity < 0 || maxTicketCapacity > MAX_MAX_TICKET_CAPACITY) {
+			throw new IllegalArgumentException();
+		}
+
+		this.maxTicketCapacity = maxTicketCapacity;
 	}
 
 	public int getTotalTickets() {
@@ -76,18 +88,6 @@ public class Configuration {
 		}
 
 		this.customerRetrievalRate = customerRetrievalRate;
-	}
-
-	public int getMaxTicketCapacity() {
-		return maxTicketCapacity;
-	}
-
-	public void setMaxTicketCapacity(int maxTicketCapacity) throws IllegalArgumentException {
-		if (maxTicketCapacity < 0 || maxTicketCapacity > MAX_MAX_TICKET_CAPACITY) {
-			throw new IllegalArgumentException();
-		}
-
-		this.maxTicketCapacity = maxTicketCapacity;
 	}
 
 	/**
@@ -138,19 +138,19 @@ public class Configuration {
 
 	public String toFormattedString() {
 		return "Configuration Details:\n" +
+				"Max Ticket Capacity: " + maxTicketCapacity +
 				"Total Tickets: " + totalTickets + "\n" +
 				"Ticket Release Rate: " + ticketReleaseRate + "\n" +
-				"Customer Retrieval Rate: " + customerRetrievalRate + "\n" +
-				"Max Ticket Capacity: " + maxTicketCapacity;
+				"Customer Retrieval Rate: " + customerRetrievalRate + "\n";
 	}
 
 	@Override
 	public String toString() {
 		return "Configuration{" +
-				"totalTickets=" + totalTickets +
+				"maxTicketCapacity=" + maxTicketCapacity +
+				", totalTickets=" + totalTickets +
 				", ticketReleaseRate=" + ticketReleaseRate +
 				", customerRetrievalRate=" + customerRetrievalRate +
-				", maxTicketCapacity=" + maxTicketCapacity +
 				'}';
 	}
 
