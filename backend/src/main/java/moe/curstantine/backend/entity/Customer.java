@@ -35,7 +35,7 @@ public class Customer implements Consumer {
 	}
 
 	@Override
-	public void buyTicket(Ticket ticket) {
+	public void bookTicket(Ticket ticket) {
 		ticket.book(id);
 	}
 
