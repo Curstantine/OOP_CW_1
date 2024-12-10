@@ -1,13 +1,19 @@
-package moe.curstantine.backend.models;
+package moe.curstantine.backend.entity;
 
-import moe.curstantine.shared.Producer;
-import moe.curstantine.shared.Ticket;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import moe.curstantine.backend.interfaces.Producer;
 
 import java.util.UUID;
 
+@Entity
 public class Vendor implements Producer {
-	private final UUID id;
-	private final String name;
+	@Id
+	private UUID id;
+	private String name;
+
+	public Vendor() {
+	}
 
 	public Vendor(String name) {
 		this.id = UUID.randomUUID();

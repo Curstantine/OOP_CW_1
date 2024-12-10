@@ -18,6 +18,7 @@ configurations {
 dependencies {
 	implementation(project(":shared"))
 	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("com.google.code.gson:gson:2.11.0")
 	compileOnly("org.projectlombok:lombok")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")

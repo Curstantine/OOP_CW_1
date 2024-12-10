@@ -1,16 +1,24 @@
-package moe.curstantine.shared;
+package moe.curstantine.backend.entity;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
+@Entity
 public class Ticket {
-	final UUID id;
-	final UUID vendorId;
-	final LocalDateTime createdAt;
+	@Id
+	private UUID id;
+	private UUID vendorId;
+	private LocalDateTime createdAt;
 
-	UUID customerId;
-	LocalDateTime bookedAt;
+	private UUID customerId;
+	private LocalDateTime bookedAt;
+
+	public Ticket() {
+	}
 
 	public Ticket(UUID vendorId) {
 		this.id = UUID.randomUUID();
