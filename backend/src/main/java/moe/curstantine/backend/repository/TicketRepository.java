@@ -3,7 +3,6 @@ package moe.curstantine.backend.repository;
 import moe.curstantine.backend.entity.Ticket;
 import org.springframework.data.repository.CrudRepository;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;

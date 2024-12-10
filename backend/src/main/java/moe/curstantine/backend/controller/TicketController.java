@@ -29,12 +29,6 @@ public class TicketController {
 				.orElse(ResponseEntity.notFound().build());
 	}
 
-	@GetMapping
-	public ResponseEntity<Iterable<Ticket>> getAllTickets() {
-		Iterable<Ticket> tickets = ticketRepository.findAll();
-		return ResponseEntity.ok(tickets);
-	}
-
 	@GetMapping("/customer/{customerId}")
 	public ResponseEntity<List<Ticket>> getTicketsByCustomerId(@PathVariable UUID customerId) {
 		List<Ticket> tickets = ticketRepository.findByCustomerId(customerId);

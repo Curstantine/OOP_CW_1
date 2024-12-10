@@ -70,7 +70,6 @@ public class Cli {
 	}
 
 	public static void attach() {
-
 	}
 
 	public static void help(String subCommand) {
