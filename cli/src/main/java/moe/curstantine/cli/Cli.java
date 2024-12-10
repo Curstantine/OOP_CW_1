@@ -102,7 +102,7 @@ public class Cli {
 				"You need to enter a valid number!"
 		);
 		if (maxTicketCapacity != -1) config.setMaxTicketCapacity(maxTicketCapacity);
-		
+
 		final int totalTickets = Prompter.promptRangeInteger(
 				0, Configuration.MAX_TOTAL_TICKETS,
 				String.format("Total number of tickets (min: 0, max: %s) [current: %s]: ",
@@ -115,7 +115,7 @@ public class Cli {
 
 		final int ticketReleaseRate = Prompter.promptRangeInteger(
 				0, Configuration.MAX_TICKET_RELEASE_RATE,
-				String.format("Ticket release rate per second (min: 0, max: %s) [current: %s]: ",
+				String.format("Ticket release rate (min: 0, max: %s) [current: %s]: ",
 						Configuration.MAX_TICKET_RELEASE_RATE,
 						config.getTicketReleaseRate()
 				),
@@ -125,7 +125,7 @@ public class Cli {
 
 		final int customerRetrievalRate = Prompter.promptRangeInteger(
 				0, Configuration.MAX_CUSTOMER_RETRIEVAL_RATE,
-				String.format("Customer retrieval rate per second (min: 0, max: %s) [current: %s]: ",
+				String.format("Customer retrieval rate (min: 0, max: %s) [current: %s]: ",
 						Configuration.MAX_CUSTOMER_RETRIEVAL_RATE,
 						config.getCustomerRetrievalRate()
 				),
