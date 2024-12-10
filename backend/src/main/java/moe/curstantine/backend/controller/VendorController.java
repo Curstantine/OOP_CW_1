@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/customer")
+@RequestMapping("/vendor")
 public class VendorController {
 	private final VendorRepository vendorRepository;
 	private final VendorPoolService vendorPoolService;

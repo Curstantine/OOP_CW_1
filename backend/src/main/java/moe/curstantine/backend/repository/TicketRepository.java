@@ -15,6 +15,4 @@ public interface TicketRepository extends CrudRepository<Ticket, UUID> {
 	List<Ticket> findByCustomerId(UUID customerId);
 
 	List<Ticket> findByVendorId(UUID vendorId);
-
-	List<Ticket> findTicketByCreatedAtNearAndBookedIsEmpty(LocalDateTime createdAt, boolean booked);
 }

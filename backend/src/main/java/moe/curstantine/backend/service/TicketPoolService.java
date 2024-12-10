@@ -69,10 +69,10 @@ public class TicketPoolService {
 
 	public synchronized void bookLatestTicket(UUID customerId) throws ArrayIndexOutOfBoundsException, IllegalStateException {
 		if (getTicketCount() == 0) throw new ArrayIndexOutOfBoundsException();
-		final List<Ticket> latest = ticketRepository.findTicketByCreatedAtNearAndBookedIsEmpty(LocalDateTime.now(), true);
-
-		if (latest.isEmpty()) throw new ArrayIndexOutOfBoundsException();
-		final Ticket ticket = latest.get(0);
+//		final List<Ticket> latest = ticketRepository.findTicketByCreatedAtNearAndBookedIsEmpty(LocalDateTime.now(), true);
+//
+//		if (latest.isEmpty()) throw new ArrayIndexOutOfBoundsException();
+//		final Ticket ticket = latest.get(0);
 	}
 
 	public long getTicketCount() {
