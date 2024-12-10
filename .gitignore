@@ -35,3 +35,9 @@ out/
 
 # Node
 **/node_modules
+
+### Database ###
+source.mv.db
+source.trace.db
+config.json
+
