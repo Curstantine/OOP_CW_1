@@ -32,6 +32,26 @@ public class Ticket {
 		this.createdAt = createdAt;
 	}
 
+	public UUID getId() {
+		return id;
+	}
+
+	public UUID getVendorId() {
+		return vendorId;
+	}
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public UUID getCustomerId() {
+		return customerId;
+	}
+
+	public LocalDateTime getBookedAt() {
+		return bookedAt;
+	}
+
 	public boolean isBooked() {
 		return customerId != null && bookedAt != null;
 	}

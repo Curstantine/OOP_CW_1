@@ -5,8 +5,6 @@ import moe.curstantine.backend.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -67,12 +65,18 @@ public class TicketPoolService {
 		ticketRepository.save(ticket);
 	}
 
-	public synchronized void bookLatestTicket(UUID customerId) throws ArrayIndexOutOfBoundsException, IllegalStateException {
+	/**
+	 * Books the latest ticket in the database.
+	 *
+	 * @throws ArrayIndexOutOfBoundsException thrown when the amount of tickets is equal to zero.
+	 * @throws IllegalStateException          thrown when the ticket is already booked.
+	 */
+	public synchronized Ticket bookLatestTicket(UUID customerId) throws ArrayIndexOutOfBoundsException, IllegalStateException {
 		if (getTicketCount() == 0) throw new ArrayIndexOutOfBoundsException();
-//		final List<Ticket> latest = ticketRepository.findTicketByCreatedAtNearAndBookedIsEmpty(LocalDateTime.now(), true);
-//
-//		if (latest.isEmpty()) throw new ArrayIndexOutOfBoundsException();
-//		final Ticket ticket = latest.get(0);
+		final Ticket latest = ticketRepository.findFirstByCustomerIdIsNullOrderByCreatedAtDesc();
+
+		bookTicket(latest, customerId);
+		return latest;
 	}
 
 	public long getTicketCount() {

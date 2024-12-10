@@ -11,15 +11,14 @@ import java.util.logging.Logger;
 public class RunnableVendor extends AbstractRunnable<Vendor> {
 	private final TicketPoolService ticketPoolService;
 	private final ConfigurationService configurationService;
-	private final Logger logger;
 
+	private static final Logger LOGGER = Logger.getLogger(RunnableVendor.class.getName());
+	
 	public RunnableVendor(Vendor self, TicketPoolService ticketPoolService, ConfigurationService configurationService) {
 		super(self);
 
 		this.ticketPoolService = ticketPoolService;
 		this.configurationService = configurationService;
-
-		this.logger = Logger.getLogger(this.getClass().getName() + "-" + self.getId());
 	}
 
 
@@ -33,9 +32,9 @@ public class RunnableVendor extends AbstractRunnable<Vendor> {
 
 			try {
 				ticketPoolService.addTicket(ticket);
-				logger.info("Ticket created: " + ticket);
+				LOGGER.info("Ticket created: " + ticket);
 			} catch (ArrayIndexOutOfBoundsException e) {
-				logger.info("Max amount of tickets already reached!");
+				LOGGER.info("Max amount of tickets already reached!");
 			}
 //			}
 
@@ -43,7 +42,7 @@ public class RunnableVendor extends AbstractRunnable<Vendor> {
 				//noinspection BusyWait
 				Thread.sleep(ticketReleaseRate);
 			} catch (InterruptedException e) {
-				logger.severe("Thread sleep interrupted: " + e.getMessage());
+				LOGGER.severe("Thread sleep interrupted: " + e.getMessage());
 				break;
 			}
 		}
