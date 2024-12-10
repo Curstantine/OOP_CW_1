@@ -1,5 +1,5 @@
 package moe.curstantine.shared;
 
-public interface Customer {
+public interface Consumer {
 	void buyTicket(Ticket ticket);
 }
