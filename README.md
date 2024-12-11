@@ -16,3 +16,10 @@
 2. Start the backend by running `Backend` application through IDEA configuration.
 3. Start the frontend application by running the `frontend` configuration.
    ![image](./documentation/runners.png)
+
+## Swagger and OpenAI
+
+After the backend is started, the below are available:
+
+1. Swagger UI documentation: http://localhost:8080/swagger-ui.html
+2. OpenAPI JSON data: http://localhost:8080/v3/api-docs
