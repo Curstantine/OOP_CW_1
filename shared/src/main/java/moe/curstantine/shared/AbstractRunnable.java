@@ -1,12 +1,36 @@
 package moe.curstantine.shared;
 
+import java.util.logging.Logger;
+
 public abstract class AbstractRunnable<T> implements Runnable {
 	protected T self;
-	protected boolean isRunning;
+	protected volatile boolean isRunning;
 
 	public AbstractRunnable(T self) {
 		this.self = self;
 		this.isRunning = true;
+	}
+
+
+	protected abstract void action();
+
+	protected abstract int getDelayDuration();
+
+	protected abstract Logger getLogger();
+
+	@Override
+	public void run() {
+		while (isRunning) {
+			action();
+
+			try {
+				//noinspection BusyWait
+				Thread.sleep(getDelayDuration());
+			} catch (InterruptedException e) {
+				getLogger().severe("Thread sleep interrupted: " + e.getMessage());
+				break;
+			}
+		}
 	}
 
 	public boolean isRunning() {

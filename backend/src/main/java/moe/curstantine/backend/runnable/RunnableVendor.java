@@ -13,7 +13,7 @@ public class RunnableVendor extends AbstractRunnable<Vendor> {
 	private final ConfigurationService configurationService;
 
 	private static final Logger LOGGER = Logger.getLogger(RunnableVendor.class.getName());
-	
+
 	public RunnableVendor(Vendor self, TicketPoolService ticketPoolService, ConfigurationService configurationService) {
 		super(self);
 
@@ -21,30 +21,25 @@ public class RunnableVendor extends AbstractRunnable<Vendor> {
 		this.configurationService = configurationService;
 	}
 
+	@Override
+	protected void action() {
+		final Ticket ticket = new Ticket(self.getId());
+
+		try {
+			ticketPoolService.addTicket(ticket);
+			LOGGER.info("Ticket created: " + ticket);
+		} catch (ArrayIndexOutOfBoundsException e) {
+			LOGGER.info("Max amount of tickets already reached!");
+		}
+	}
 
 	@Override
-	public void run() {
-		while (isRunning) {
-			final int ticketReleaseRate = configurationService.getTicketReleaseRate();
+	protected int getDelayDuration() {
+		return configurationService.getTicketReleaseRate();
+	}
 
-//			for (int i = 0; i < ticketReleaseRate; i++) {
-			final Ticket ticket = new Ticket(self.getId());
-
-			try {
-				ticketPoolService.addTicket(ticket);
-				LOGGER.info("Ticket created: " + ticket);
-			} catch (ArrayIndexOutOfBoundsException e) {
-				LOGGER.info("Max amount of tickets already reached!");
-			}
-//			}
-
-			try {
-				//noinspection BusyWait
-				Thread.sleep(ticketReleaseRate);
-			} catch (InterruptedException e) {
-				LOGGER.severe("Thread sleep interrupted: " + e.getMessage());
-				break;
-			}
-		}
+	@Override
+	protected Logger getLogger() {
+		return LOGGER;
 	}
 }

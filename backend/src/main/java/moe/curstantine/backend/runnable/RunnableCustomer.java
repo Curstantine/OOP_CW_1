@@ -22,24 +22,22 @@ public class RunnableCustomer extends AbstractRunnable<Customer> {
 	}
 
 	@Override
-	public void run() {
-		while (isRunning) {
-			final int retrievalRate = configurationService.getCustomerRetrievalRate();
-
-			try {
-				final Ticket latest = ticketPoolService.bookLatestTicket(self.getId());
-				LOGGER.info("Ticket booked: " + latest.getId() + " by " + self.getName());
-			} catch (ArrayIndexOutOfBoundsException e) {
-				LOGGER.info("Max amount of tickets already reached!");
-			}
-
-			try {
-				//noinspection BusyWait
-				Thread.sleep(retrievalRate);
-			} catch (InterruptedException e) {
-				LOGGER.severe("Thread sleep interrupted: " + e.getMessage());
-				break;
-			}
+	public void action() {
+		try {
+			final Ticket latest = ticketPoolService.bookLatestTicket(self.getId());
+			LOGGER.info("Ticket booked: " + latest.getId() + " by " + self.getName());
+		} catch (ArrayIndexOutOfBoundsException e) {
+			LOGGER.info("Max amount of tickets already reached!");
 		}
+	}
+
+	@Override
+	protected int getDelayDuration() {
+		return configurationService.getCustomerRetrievalRate();
+	}
+
+	@Override
+	protected Logger getLogger() {
+		return LOGGER;
 	}
 }
