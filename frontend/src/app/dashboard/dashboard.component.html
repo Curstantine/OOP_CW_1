@@ -29,4 +29,14 @@
 		</div>
 	</div>
 
+	<div class="grid grid-cols-2 max-w-3xl justify-items-center mt-4">
+		<app-button
+				(click)="onAddVendor()"
+				label="Add vendor (producer)"
+				iconClass="ms--nest-wake-on-approach" />
+		<app-button
+				(click)="onAddCustomer()"
+				label="Add customer (consumer)"
+				iconClass="ms--person-add-rounded" />
+	</div>
 </main>
