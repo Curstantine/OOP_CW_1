@@ -1,1 +1,11 @@
-/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+	@apply font-sans bg-neutral-900 text-neutral-50 antialiased;
+}
+
+body {
+	@apply container;
+}
