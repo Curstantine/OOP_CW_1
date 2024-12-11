@@ -9,3 +9,11 @@
 body {
 	@apply container;
 }
+
+app-root {
+	@apply grid grid-cols-[16rem_1fr];
+}
+
+router-outlet {
+	@apply hidden;
+}
