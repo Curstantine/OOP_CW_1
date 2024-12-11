@@ -1,4 +1,4 @@
-import { Component, signal } from "@angular/core";
+import { Component, OnInit, signal } from "@angular/core";
 import { Observable } from "rxjs";
 import { AsyncPipe, NgClass } from "@angular/common";
 import { map } from "rxjs/operators";
@@ -15,15 +15,19 @@ import { Configuration } from "../../types/configuration";
 	imports: [AsyncPipe, AllocationTickComponent, ButtonComponent, LabelValueStatComponent, NgClass],
 	templateUrl: "./dashboard.component.html"
 })
-export class DashboardComponent {
-	tickets$: Observable<AggregatedTicket[]>;
-	configuration$: Observable<Configuration>;
-	vendorCount$: Observable<number>;
-	customerCount$: Observable<number>;
+export class DashboardComponent implements OnInit {
+	tickets$!: Observable<AggregatedTicket[]>;
+	configuration$!: Observable<Configuration>;
+	vendorCount$!: Observable<number>;
+	customerCount$!: Observable<number>;
 
 	showStop = signal(false);
 
 	constructor(private service: DashboardService) {
+
+	}
+
+	ngOnInit() {
 		this.tickets$ = this.service.getAggregatedTickets();
 		this.configuration$ = this.service.getConfiguration().pipe(
 			map((resp) => resp.data!)

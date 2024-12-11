@@ -1,1 +1,85 @@
-<p>settings works!</p>
+<main class="pt-6 px-6 max-w-3xl mx-auto">
+	<h1 class="text-3xl font-medium">Settings</h1>
+
+	<form [formGroup]="settingsForm" (ngSubmit)="onSubmit()" class="space-y-4">
+		<div class="form-group">
+			<label for="maxTicketCapacity" class="block mb-2">
+				Max Ticket Capacity
+				<span class="text-sm text-gray-500 block">Maximum number of tickets the system can store</span>
+			</label>
+			<input
+					type="number"
+					id="maxTicketCapacity"
+					formControlName="maxTicketCapacity"
+					class="w-full p-2 border rounded"
+					min="1"
+			/>
+			<div *ngIf="settingsForm.get('maxTicketCapacity').invalid && settingsForm.get('maxTicketCapacity').touched"
+				 class="text-red-500 text-sm">
+				<span *ngIf="settingsForm.get('maxTicketCapacity').errors?.required">Max Ticket Capacity is required</span>
+				<span *ngIf="settingsForm.get('maxTicketCapacity').errors?.min">Must be at least 1</span>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="totalTickets" class="block mb-2">
+				Total Tickets
+				<span class="text-sm text-gray-500 block">Total tickets available in the system (Read-only)</span>
+			</label>
+			<input
+					type="number"
+					id="totalTickets"
+					formControlName="totalTickets"
+					class="w-full p-2 border rounded bg-gray-100"
+					readonly
+			/>
+			<small class="text-gray-500">Note: This field is for reference only</small>
+		</div>
+
+		<div class="form-group">
+			<label for="ticketReleaseRate" class="block mb-2">
+				Ticket Release Rate
+				<span class="text-sm text-gray-500 block">Time to release tickets (in milliseconds)</span>
+			</label>
+			<input
+					type="number"
+					id="ticketReleaseRate"
+					formControlName="ticketReleaseRate"
+					class="w-full p-2 border rounded"
+					min="100"
+			/>
+			<div *ngIf="settingsForm.get('ticketReleaseRate').invalid && settingsForm.get('ticketReleaseRate').touched"
+				 class="text-red-500 text-sm">
+				<span *ngIf="settingsForm.get('ticketReleaseRate').errors?.required">Ticket Release Rate is required</span>
+				<span *ngIf="settingsForm.get('ticketReleaseRate').errors?.min">Must be at least 100 milliseconds</span>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="customerRetrievalRate" class="block mb-2">
+				Customer Retrieval Rate
+				<span class="text-sm text-gray-500 block">Time for customer to book a ticket (in milliseconds)</span>
+			</label>
+			<input
+					type="number"
+					id="customerRetrievalRate"
+					formControlName="customerRetrievalRate"
+					class="w-full p-2 border rounded"
+					min="100"
+			/>
+			<div *ngIf="settingsForm.get('customerRetrievalRate').invalid && settingsForm.get('customerRetrievalRate').touched"
+				 class="text-red-500 text-sm">
+				<span *ngIf="settingsForm.get('customerRetrievalRate').errors?.required">Customer Retrieval Rate is required</span>
+				<span *ngIf="settingsForm.get('customerRetrievalRate').errors?.min">Must be at least 100 milliseconds</span>
+			</div>
+		</div>
+
+		<button
+				type="submit"
+				[disabled]="settingsForm.invalid"
+				class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600 disabled:bg-gray-400"
+		>
+			Save Settings
+		</button>
+	</form>
+</main>
