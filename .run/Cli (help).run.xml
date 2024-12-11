@@ -1,0 +1,12 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Cli (help)" type="Application" factoryName="Application">
+    <option name="ALTERNATIVE_JRE_PATH" value="23" />
+    <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+    <option name="MAIN_CLASS_NAME" value="moe.curstantine.cli.Cli" />
+    <module name="OOP_CW_1.cli.main" />
+    <option name="PROGRAM_PARAMETERS" value="help" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
