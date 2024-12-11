@@ -4,7 +4,6 @@ import moe.curstantine.backend.service.ConfigurationService;
 import moe.curstantine.shared.GenericResponse;
 import moe.curstantine.shared.ReferenceConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
