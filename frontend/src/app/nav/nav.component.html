@@ -1,0 +1,16 @@
+<nav class="flex flex-col min-h-screen border-r border-neutral-800 w-64 px-2">
+	<span class="font-medium text-2xl pl-2 py-4 first-letter:text-cyan-400">Tigyatt</span>
+	<ul class="flex flex-col">
+		@for (destination of destinations; track destination.href) {
+			<li class="contents">
+				<a draggable="false"
+				   routerLink="{{destination.href}}"
+				   routerLinkActive="bg-neutral-700 text-neutral-100"
+				   class="h-9 rounded-md transition-colors text-sm inline-flex text-neutral-200 items-center gap-2 px-4">
+					<div class="iconify size-5 {{destination.iconClass}}"></div>
+					{{ destination.label }}
+				</a>
+			</li>
+		}
+	</ul>
+</nav>
