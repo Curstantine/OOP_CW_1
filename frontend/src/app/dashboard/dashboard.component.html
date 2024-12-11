@@ -1,8 +1,26 @@
-<main class="pt-6 px-6">
+<main class="pt-6 px-6 max-w-3xl mx-auto">
 	<h1 class="text-3xl font-medium">Welcome!</h1>
 
-	<div class="flex flex-col mt-6 gap-2 max-w-3xl">
-		<h2 class="font-medium text-neutral-400 text-lg">Ticket allocation</h2>
+	<div class="grid grid-cols-4 justify-items-center pt-12 pb-6">
+		@if (configuration$ | async; as conf) {
+			<app-label-value-stat label="Max Ticket Capacity" value="{{conf.maxTicketCapacity}}" />
+		}
+
+		@if (tickets$ | async; as data) {
+			<app-label-value-stat label="Total Tickets" value="{{data.length}}" />
+		}
+
+		@if (customerCount$ | async; as customerCount) {
+			<app-label-value-stat label="Customers" value="{{customerCount}}" />
+		}
+
+		@if (vendorCount$ | async; as vendorCount) {
+			<app-label-value-stat label="Vendors" value="{{vendorCount}}" />
+		}
+	</div>
+
+	<div class="flex flex-col mt-6 gap-2">
+		<h2 class="font-medium text-neutral-200 text-lg">Ticket allocation</h2>
 		<div class="grid grid-cols-[repeat(auto-fill,1rem)] gap-1">
 			@if (tickets$ | async; as data) {
 				@for (ticket of data; track ticket.id) {
@@ -29,7 +47,7 @@
 		</div>
 	</div>
 
-	<div class="grid grid-cols-2 max-w-3xl justify-items-center mt-4">
+	<div class="grid grid-cols-2 justify-items-center mt-4">
 		<app-button
 				(click)="onAddVendor()"
 				label="Add vendor (producer)"
@@ -38,5 +56,20 @@
 				(click)="onAddCustomer()"
 				label="Add customer (consumer)"
 				iconClass="ms--person-add-rounded" />
+	</div>
+
+	<div class="flex justify-center pt-12">
+
+		<button (click)="onStartStop()"
+				class="inline-flex items-center justify-center text-center rounded-md gap-2 h-10 px-4 text-sm transition-colors"
+				[ngClass]="showStop() ? 'bg-red-900/25 text-red-400' : 'text-green-400 bg-green-900/25'"
+		>
+			<div class="iconify ms--play-arrow-rounded size-6"></div>
+			@if (showStop()) {
+				End ticket release
+			} @else {
+				Start ticket release
+			}
+		</button>
 	</div>
 </main>

@@ -22,7 +22,6 @@ public class VendorController {
 		this.vendorPoolService = vendorPoolService;
 	}
 
-
 	@GetMapping("/{id}")
 	public ResponseEntity<GenericResponse<Vendor>> getVendorById(@PathVariable UUID id) throws DataNotFoundException {
 		return vendorRepository.findById(id)
@@ -38,6 +37,11 @@ public class VendorController {
 
 		vendorPoolService.startRunnable(data);
 		return ResponseEntity.ok(GenericResponse.fromSuccess(data));
+	}
+
+	@GetMapping("/count")
+	public ResponseEntity<GenericResponse<Long>> count() {
+		return ResponseEntity.ok(GenericResponse.fromSuccess(vendorRepository.count()));
 	}
 
 	@PostMapping("/startAll")

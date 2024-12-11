@@ -42,6 +42,11 @@ public class CustomerController {
 		return ResponseEntity.ok(GenericResponse.fromSuccess(data));
 	}
 
+	@GetMapping("/count")
+	public ResponseEntity<GenericResponse<Long>> count() {
+		return ResponseEntity.ok(GenericResponse.fromSuccess(customerRepository.count()));
+	}
+
 	@PostMapping("/startAll")
 	public ResponseEntity<GenericResponse<Boolean>> startAll() {
 		customerPoolService.resumeSuspended();
