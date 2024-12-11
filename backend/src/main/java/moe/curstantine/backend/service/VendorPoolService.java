@@ -40,10 +40,9 @@ public class VendorPoolService {
 		}
 	}
 
-	public void suspendRunning(Vendor vendor) {
+	public void suspendRunning() {
 		for (RunnableVendor runnable : pool) {
 			runnable.stop();
 		}
 	}
-
 }

@@ -4,6 +4,7 @@ import moe.curstantine.backend.entity.Customer;
 import moe.curstantine.backend.repository.CustomerRepository;
 import moe.curstantine.backend.service.CustomerPoolService;
 import moe.curstantine.shared.GenericResponse;
+import moe.curstantine.shared.exception.DataNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,11 +26,11 @@ public class CustomerController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<GenericResponse<Customer>> getCustomerById(@PathVariable UUID id) {
+	public ResponseEntity<GenericResponse<Customer>> getCustomerById(@PathVariable UUID id) throws DataNotFoundException {
 		return customerRepository.findById(id)
 				.map(GenericResponse::fromSuccess)
 				.map(ResponseEntity::ok)
-				.orElse(ResponseEntity.notFound().build());
+				.orElseThrow(() -> new DataNotFoundException("Customer with id " + id + " not found"));
 	}
 
 	@PostMapping
@@ -39,5 +40,17 @@ public class CustomerController {
 
 		customerPoolService.startRunnable(data);
 		return ResponseEntity.ok(GenericResponse.fromSuccess(data));
+	}
+
+	@PostMapping("/startAll")
+	public ResponseEntity<GenericResponse<Boolean>> startAll() {
+		customerPoolService.resumeSuspended();
+		return ResponseEntity.ok(GenericResponse.fromSuccess(true));
+	}
+
+	@PostMapping("/stopAll")
+	public ResponseEntity<GenericResponse<Boolean>> stopAll() {
+		customerPoolService.suspendRunning();
+		return ResponseEntity.ok(GenericResponse.fromSuccess(true));
 	}
 }

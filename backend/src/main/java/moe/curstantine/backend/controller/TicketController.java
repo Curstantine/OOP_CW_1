@@ -2,6 +2,8 @@ package moe.curstantine.backend.controller;
 
 import moe.curstantine.backend.entity.Ticket;
 import moe.curstantine.backend.repository.TicketRepository;
+import moe.curstantine.shared.GenericResponse;
+import moe.curstantine.shared.exception.DataNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,21 +25,28 @@ public class TicketController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Ticket> getTicketById(@PathVariable UUID id) {
+	public ResponseEntity<GenericResponse<Ticket>> getTicketById(@PathVariable UUID id) throws DataNotFoundException {
 		return ticketRepository.findById(id)
+				.map(GenericResponse::fromSuccess)
 				.map(ResponseEntity::ok)
-				.orElse(ResponseEntity.notFound().build());
+				.orElseThrow(() -> new DataNotFoundException("Ticket with id " + id + " not found"));
 	}
 
 	@GetMapping("/customer/{customerId}")
-	public ResponseEntity<List<Ticket>> getTicketsByCustomerId(@PathVariable UUID customerId) {
+	public ResponseEntity<GenericResponse<List<Ticket>>> getTicketsByCustomerId(@PathVariable UUID customerId) {
 		List<Ticket> tickets = ticketRepository.findByCustomerId(customerId);
-		return ResponseEntity.ok(tickets);
+		return ResponseEntity.ok(GenericResponse.fromSuccess(tickets));
 	}
 
 	@GetMapping("/vendor/{vendorId}")
-	public ResponseEntity<List<Ticket>> getTicketsByVendorId(@PathVariable UUID vendorId) {
+	public ResponseEntity<GenericResponse<List<Ticket>>> getTicketsByVendorId(@PathVariable UUID vendorId) {
 		List<Ticket> tickets = ticketRepository.findByVendorId(vendorId);
-		return ResponseEntity.ok(tickets);
+		return ResponseEntity.ok(GenericResponse.fromSuccess(tickets));
+	}
+
+	@GetMapping("/count")
+	public ResponseEntity<GenericResponse<Long>> countTickets() {
+		Long count = ticketRepository.count();
+		return ResponseEntity.ok(GenericResponse.fromSuccess(count));
 	}
 }

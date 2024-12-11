@@ -5,6 +5,7 @@ import moe.curstantine.backend.repository.VendorRepository;
 import moe.curstantine.backend.service.VendorPoolService;
 import moe.curstantine.shared.GenericResponse;
 import moe.curstantine.shared.body.CreateVendor;
+import moe.curstantine.shared.exception.DataNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,11 +24,11 @@ public class VendorController {
 
 
 	@GetMapping("/{id}")
-	public ResponseEntity<GenericResponse<Vendor>> getVendorById(@PathVariable UUID id) {
+	public ResponseEntity<GenericResponse<Vendor>> getVendorById(@PathVariable UUID id) throws DataNotFoundException {
 		return vendorRepository.findById(id)
 				.map(GenericResponse::fromSuccess)
 				.map(ResponseEntity::ok)
-				.orElse(ResponseEntity.notFound().build());
+				.orElseThrow(() -> new DataNotFoundException("Vendor with id " + id + " not found"));
 	}
 
 	@PostMapping
@@ -37,5 +38,17 @@ public class VendorController {
 
 		vendorPoolService.startRunnable(data);
 		return ResponseEntity.ok(GenericResponse.fromSuccess(data));
+	}
+
+	@PostMapping("/startAll")
+	public ResponseEntity<GenericResponse<Boolean>> startAll() {
+		vendorPoolService.resumeSuspended();
+		return ResponseEntity.ok(GenericResponse.fromSuccess(true));
+	}
+
+	@PostMapping("/endAll")
+	public ResponseEntity<GenericResponse<Boolean>> stopAll() {
+		vendorPoolService.suspendRunning();
+		return ResponseEntity.ok(GenericResponse.fromSuccess(true));
 	}
 }

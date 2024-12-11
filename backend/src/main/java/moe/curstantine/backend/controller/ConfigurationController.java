@@ -60,18 +60,4 @@ public class ConfigurationController {
 
 		return ResponseEntity.ok(resp);
 	}
-
-	@ExceptionHandler(IOException.class)
-	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-	public <T> ResponseEntity<GenericResponse<T>> handleIOException(IOException e) {
-		final GenericResponse<T> resp = GenericResponse.fromError(e.getMessage());
-		return ResponseEntity.internalServerError().body(resp);
-	}
-
-	@ExceptionHandler(IllegalArgumentException.class)
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	public <T> ResponseEntity<GenericResponse<T>> handleIllegalArgumentException(IllegalArgumentException e) {
-		final GenericResponse<T> resp = GenericResponse.fromError("Malformed request: " + e.getMessage());
-		return ResponseEntity.badRequest().body(resp);
-	}
 }
