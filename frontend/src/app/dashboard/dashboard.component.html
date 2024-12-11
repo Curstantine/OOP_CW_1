@@ -6,12 +6,18 @@
 		<div class="grid grid-cols-[repeat(auto-fill,1rem)] gap-1">
 			@if (tickets$ | async; as data) {
 				@for (ticket of data; track ticket.id) {
-					<app-allocation-tick [isBooked]="ticket.isBooked" />
+					<app-allocation-tick
+							[isBooked]="ticket.isBooked"
+							[isCreated]="ticket.isCreated" />
 				}
 			}
 		</div>
 
-		<div class="grid grid-cols-2 text-sm text-neutral-400">
+		<div class="grid grid-cols-3 text-sm text-neutral-400">
+			<div class="inline-flex items-center gap-2">
+				<span>Unreleased:</span>
+				<app-allocation-tick [isBooked]="false" [isCreated]="false" />
+			</div>
 			<div class="inline-flex items-center gap-2">
 				<span>Not booked: </span>
 				<app-allocation-tick />
