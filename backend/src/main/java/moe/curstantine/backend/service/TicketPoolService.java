@@ -5,7 +5,6 @@ import moe.curstantine.backend.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -46,26 +45,6 @@ public class TicketPoolService {
 	}
 
 	/**
-	 * Updates the ticket with corresponding booking data and update the persistent h2 database.
-	 *
-	 * @throws ArrayIndexOutOfBoundsException thrown when the amount of tickets is equal to zero.
-	 * @throws IllegalStateException          thrown when the ticket is already booked.
-	 * @throws IllegalAccessError             thrown when the ticket by id does not exist.
-	 */
-	public synchronized void bookTicket(UUID ticketId, UUID customerId) throws ArrayIndexOutOfBoundsException, IllegalStateException, IllegalAccessError {
-		if (getTicketCount() == 0) throw new ArrayIndexOutOfBoundsException();
-
-		final Optional<Ticket> optTicket = ticketRepository.findById(ticketId);
-		if (optTicket.isEmpty()) throw new IllegalAccessError("Ticket not found");
-
-		final Ticket ticket = optTicket.get();
-		if (ticket.isBooked()) throw new IllegalStateException("Ticket is already booked");
-
-		ticket.book(customerId);
-		ticketRepository.save(ticket);
-	}
-
-	/**
 	 * Books the latest ticket in the database.
 	 *
 	 * @throws ArrayIndexOutOfBoundsException thrown when the amount of tickets is equal to zero.
@@ -74,6 +53,8 @@ public class TicketPoolService {
 	public synchronized Ticket bookLatestTicket(UUID customerId) throws ArrayIndexOutOfBoundsException, IllegalStateException {
 		if (getTicketCount() == 0) throw new ArrayIndexOutOfBoundsException();
 		final Ticket latest = ticketRepository.findFirstByCustomerIdIsNullOrderByCreatedAtDesc();
+
+		if (latest == null) throw new ArrayIndexOutOfBoundsException("Ticket not found");
 
 		bookTicket(latest, customerId);
 		return latest;
