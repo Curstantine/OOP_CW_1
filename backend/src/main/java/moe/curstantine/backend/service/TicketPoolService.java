@@ -26,7 +26,7 @@ public class TicketPoolService {
 	 */
 	public synchronized void addTicket(Ticket ticket) throws ArrayIndexOutOfBoundsException {
 		final int maxCapacity = configurationService.getMaxTicketCapacity();
-		if (getTicketCount() > maxCapacity) throw new ArrayIndexOutOfBoundsException();
+		if (getTicketCount() == maxCapacity) throw new ArrayIndexOutOfBoundsException();
 
 		ticketRepository.save(ticket);
 	}
