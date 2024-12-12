@@ -17,9 +17,13 @@
 
 ## Starting up
 
-1. Complete the configuration step by running the `Cli (configure)` application.
-2. Start the backend by running `Backend` application through IDEA configuration.
-3. Start the frontend application by running the `frontend` configuration.
+1. Install the necessary dependencies by opening the project in Intellij IDEA, and:
+	- Running `pnpm install` to install nodejs dependencies.
+	- Running `Sync All Gradle Projects` to install java related dependencies
+	  ![image](./documentation/sync.png)
+2. Complete the configuration step by running the `Cli (configure)` application.
+3. Start the backend by running `Backend` application through IDEA configuration.
+4. Start the frontend application by running the `frontend` configuration.
    ![image](./documentation/runners.png)
 
 ## Swagger and OpenAI
