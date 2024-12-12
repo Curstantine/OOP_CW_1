@@ -33,12 +33,6 @@ public class Cli {
 			- Customer retrieval rate
 			- Max ticket capacity""";
 
-	private static final String HELP_ATTACH = """
-			Usage: cli attach
-			
-			Attaches this CLI into the backend application, displaying all events being executed by the process.""";
-
-
 	public static void main(String[] args) {
 		Configuration config;
 
@@ -56,9 +50,6 @@ public class Cli {
 		}
 
 		switch (args[0]) {
-			case "attach":
-				attach();
-				break;
 			case "configure":
 				configure(config);
 				break;
@@ -69,25 +60,16 @@ public class Cli {
 		}
 	}
 
-	public static void attach() {
-	}
-
 	public static void help(String subCommand) {
 		if (subCommand == null || subCommand.isEmpty()) {
 			System.out.println(HELP_BASE);
 			return;
 		}
 
-		switch (subCommand) {
-			case "configure":
-				System.out.println(HELP_CONFIGURE);
-				break;
-			case "attach":
-				System.out.println(HELP_ATTACH);
-				break;
-			default:
-				System.out.println(HELP_BASE);
-				break;
+		if (subCommand.equals("configure")) {
+			System.out.println(HELP_CONFIGURE);
+		} else {
+			System.out.println(HELP_BASE);
 		}
 	}
 
