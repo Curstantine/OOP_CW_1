@@ -12,6 +12,6 @@ import { RouterLink, RouterLinkActive } from "@angular/router";
 export class NavComponent {
 	destinations: { href: string; label: string; iconClass: string }[] = [
 		{ href: "/dashboard", label: "Dashboard", iconClass: "ms--space-dashboard-rounded" },
-		{ href: "/settings", label: "Settings", iconClass: "ms--settings" },
+		// { href: "/settings", label: "Settings", iconClass: "ms--settings" },
 	];
 }

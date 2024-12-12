@@ -76,4 +76,8 @@ public class TicketController {
 		return ResponseEntity.ok(GenericResponse.fromSuccess(tickets));
 	}
 
+	@GetMapping("/count")
+	public ResponseEntity<GenericResponse<Long>> countTickets() {
+		return ResponseEntity.ok(GenericResponse.fromSuccess(ticketRepository.count()));
+	}
 }

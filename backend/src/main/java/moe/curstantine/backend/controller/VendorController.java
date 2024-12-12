@@ -44,6 +44,11 @@ public class VendorController {
 		return ResponseEntity.ok(GenericResponse.fromSuccess(vendorRepository.count()));
 	}
 
+	@GetMapping("/status")
+	public ResponseEntity<GenericResponse<Boolean>> status() {
+		return ResponseEntity.ok(GenericResponse.fromSuccess(vendorPoolService.isRunning()));
+	}
+
 	@PostMapping("/startAll")
 	public ResponseEntity<GenericResponse<Boolean>> startAll() {
 		vendorPoolService.resumeSuspended();

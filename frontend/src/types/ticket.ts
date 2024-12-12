@@ -15,6 +15,5 @@ export interface AggregatedTicket {
 	isBooked: boolean;
 }
 
-export type TicketResponse = GenericResponse<Ticket>;
-export type TicketCollectionResponse = GenericResponse<Ticket[]>;
+export type TicketCountResponse = GenericResponse<number>;
 export type AggregatedTicketCollectionResponse = GenericResponse<AggregatedTicket[]>;

@@ -11,7 +11,10 @@ public abstract class AbstractRunnable<T> implements Runnable {
 		this.isRunning = true;
 	}
 
-
+	public T getSelf() {
+		return self;
+	}
+	
 	protected abstract void action();
 
 	protected abstract int getDelayDuration();

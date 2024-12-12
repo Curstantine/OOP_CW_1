@@ -3,7 +3,11 @@ import { map, share, switchMap, takeUntil } from "rxjs/operators";
 import { Injectable, OnDestroy } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
-import type { AggregatedTicket, AggregatedTicketCollectionResponse } from "../../types/ticket";
+import type {
+	AggregatedTicket,
+	AggregatedTicketCollectionResponse,
+	TicketCountResponse
+} from "../../types/ticket";
 import type { ConfigurationResponse } from "../../types/configuration";
 import type { CreateVendor, VendorCountResponse, VendorResponse } from "../../types/vendor";
 import type { CreateCustomer, CustomerCountResponse, CustomerResponse } from "../../types/customer";
@@ -15,8 +19,7 @@ export class DashboardService implements OnDestroy {
 	private readonly aggregatedTickets$: Observable<AggregatedTicket[]>;
 
 	constructor(private http: HttpClient) {
-
-		this.aggregatedTickets$ = timer(1, 3000).pipe(
+		this.aggregatedTickets$ = timer(1, 1000).pipe(
 			switchMap(() => this.http.get<AggregatedTicketCollectionResponse>("/tickets/aggregate")),
 			map((resp) => resp.data ?? []),
 			map((resp) => resp.map((x) => ({
@@ -36,6 +39,10 @@ export class DashboardService implements OnDestroy {
 		return this.http.get<ConfigurationResponse>("/config");
 	}
 
+	getTicketCount(): Observable<TicketCountResponse> {
+		return this.http.get<TicketCountResponse>("/tickets/count");
+	}
+
 	getVendorCount(): Observable<VendorCountResponse> {
 		return this.http.get<VendorCountResponse>("/vendor/count");
 	}
@@ -52,8 +59,12 @@ export class DashboardService implements OnDestroy {
 		return this.http.post<CustomerResponse>("/customer", { name: "Testing" } as CreateCustomer);
 	}
 
+	isAtLeastOneRunning(): Observable<GenericResponse<boolean>> {
+		return this.http.get<GenericResponse<boolean>>("/vendor/status");
+	}
+
 	startAllVendors(): Observable<GenericResponse<boolean>> {
-		return this.http.post<GenericResponse<boolean>>("/vendor/startAllVendors", {});
+		return this.http.post<GenericResponse<boolean>>("/vendor/startAll", {});
 	}
 
 	endAllVendors(): Observable<GenericResponse<boolean>> {

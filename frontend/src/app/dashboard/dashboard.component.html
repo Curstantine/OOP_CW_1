@@ -7,16 +7,16 @@
 			<app-label-value-stat label="Max Ticket Capacity" value="{{conf.maxTicketCapacity}}" />
 		}
 
-		@if (tickets$ | async; as data) {
-			<app-label-value-stat label="Total Tickets" value="{{data.length}}" />
+		@if (ticketCount$ | async; as ticketCount) {
+			<app-label-value-stat label="Total Tickets" value="{{ticketCount.data}}" />
 		}
 
 		@if (customerCount$ | async; as customerCount) {
-			<app-label-value-stat label="Customers" value="{{customerCount}}" />
+			<app-label-value-stat label="Customers" value="{{customerCount.data}}" />
 		}
 
 		@if (vendorCount$ | async; as vendorCount) {
-			<app-label-value-stat label="Vendors" value="{{vendorCount}}" />
+			<app-label-value-stat label="Vendors" value="{{vendorCount.data}}" />
 		}
 	</div>
 
@@ -65,10 +65,11 @@
 				class="inline-flex items-center justify-center text-center rounded-md gap-2 h-10 px-4 text-sm transition-colors"
 				[ngClass]="showStop() ? 'bg-red-900/25 text-red-400' : 'text-green-400 bg-green-900/25'"
 		>
-			<div class="iconify ms--play-arrow-rounded size-6"></div>
 			@if (showStop()) {
+				<div class="iconify ms--pause-rounded size-6"></div>
 				End ticket release
 			} @else {
+				<div class="iconify ms--play-arrow-rounded size-6"></div>
 				Start ticket release
 			}
 		</button>

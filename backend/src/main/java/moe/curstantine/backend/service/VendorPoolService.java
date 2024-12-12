@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.logging.Logger;
 
 @Service
 public class VendorPoolService {
@@ -15,6 +16,8 @@ public class VendorPoolService {
 	private final ConfigurationService configurationService;
 
 	private final Collection<RunnableVendor> pool = Collections.synchronizedCollection(new ArrayList<>());
+
+	private final static Logger LOGGER = Logger.getLogger(VendorPoolService.class.getName());
 
 	@Autowired
 	public VendorPoolService(TicketPoolService ticketPoolService, ConfigurationService configurationService) {
@@ -30,8 +33,21 @@ public class VendorPoolService {
 		pool.add(runnable);
 	}
 
+	/**
+	 * If at least one runnable is active
+	 */
+	public boolean isRunning() {
+		for (RunnableVendor runnable : pool) {
+			if (runnable.isRunning()) return true;
+		}
+
+		return false;
+	}
+
 	public void resumeSuspended() {
 		for (RunnableVendor runnable : pool) {
+			LOGGER.fine("Starting vendor " + runnable.getSelf().getId());
+
 			if (runnable.isRunning()) continue;
 			runnable.start();
 
@@ -42,6 +58,7 @@ public class VendorPoolService {
 
 	public void suspendRunning() {
 		for (RunnableVendor runnable : pool) {
+			LOGGER.fine("Stopping vendor " + runnable.getSelf().getId());
 			runnable.stop();
 		}
 	}
