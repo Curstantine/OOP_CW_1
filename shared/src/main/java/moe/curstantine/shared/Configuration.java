@@ -165,7 +165,7 @@ public class Configuration {
 
 	public String toFormattedString() {
 		return "Configuration Details:\n" +
-				"Max Ticket Capacity: " + maxTicketCapacity +
+				"Max Ticket Capacity: " + maxTicketCapacity + "\n" +
 				"Total Tickets: " + totalTickets + "\n" +
 				"Ticket Release Rate: " + ticketReleaseRate + "\n" +
 				"Customer Retrieval Rate: " + customerRetrievalRate + "\n";
