@@ -4,6 +4,11 @@
 - IIT ID: 20220945
 - UoW ID: 20527356
 
+## Documents
+
+- Testing report: [test_report.pdf](./testing_report.pdf)
+- Demonstration video: [demo.mp4](./demo.mp4)
+
 ## Prerequisites
 
 1. JDK version >= 23.0.1
