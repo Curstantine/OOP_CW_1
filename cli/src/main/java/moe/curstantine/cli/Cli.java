@@ -21,8 +21,7 @@ public class Cli {
 			
 			Available commands:
 			help 		Displays this help message. For further explanations, use cli help <COMMAND>
-			configure	Prompts to change the service configuration
-			attach		Displays the real-time events executing inside the backend application""";
+			configure	Prompts to change the service configuration""";
 
 	private static final String HELP_CONFIGURE = """
 			Usage: cli configure
