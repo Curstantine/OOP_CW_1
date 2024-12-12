@@ -1,5 +1,5 @@
 import { Component, OnInit, signal } from "@angular/core";
-import { Observable, tap } from "rxjs";
+import { Observable } from "rxjs";
 import { AsyncPipe, NgClass } from "@angular/common";
 import { map } from "rxjs/operators";
 

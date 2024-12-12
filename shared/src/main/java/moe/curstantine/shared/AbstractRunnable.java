@@ -14,7 +14,7 @@ public abstract class AbstractRunnable<T> implements Runnable {
 	public T getSelf() {
 		return self;
 	}
-	
+
 	protected abstract void action();
 
 	protected abstract int getDelayDuration();
@@ -49,7 +49,7 @@ public abstract class AbstractRunnable<T> implements Runnable {
 	}
 
 	/**
-	 * Calling {@link #stop} will suspend the running function, making the GC cleanup the related Thread.
+	 * Calling this method will suspend the running function, making the GC cleanup the related Thread.
 	 * <p>
 	 * When trying to call {@link #start} again, make sure to create a new thread.
 	 */
